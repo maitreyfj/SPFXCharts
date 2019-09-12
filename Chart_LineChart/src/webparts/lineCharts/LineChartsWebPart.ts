@@ -15,19 +15,8 @@ import * as strings from 'LineChartsWebPartStrings';
 import LineCharts from './components/LineCharts';
 import { ILineChartsProps } from './components/ILineChartsProps';
 import { sp, List, Fields } from "@pnp/sp";
-export interface ILineChartsWebPartProps {
-  Description: string;
-  selectedList:string;
-  SiteURL: string;
-  FieldX: string;
-  FieldY: string;
-  FieldXArr:any[];
-  FieldYArr:any[];
-  OperationType: string;
-  ChartDataTypes:any[];
-  FillChart:boolean;
-}
-export default class LineChartsWebPart extends BaseClientSideWebPart<ILineChartsWebPartProps> {
+
+export default class LineChartsWebPart extends BaseClientSideWebPart<ILineChartsProps> {
   private  receivedLists :boolean = false;
   private  ddlLists :   IPropertyPaneDropdownOption [] =  [];
   private  ddlListColumns :   IPropertyPaneDropdownOption [] =  [];
@@ -49,16 +38,16 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
       text:'Max'
     }
   ];
-  private ddlChartDataTypes : IPropertyPaneDropdownOption [] = [
-    {
-      key: 'Single-Dataset',
-      text: 'Single-Dataset'
-    },
-    {
-      key: 'Multiple-Dataset',
-      text: 'Multiple-Dataset'
-    }
-  ];
+  // private ddlChartDataTypes : IPropertyPaneDropdownOption [] = [
+  //   {
+  //     key: 'Single-Dataset',
+  //     text: 'Single-Dataset'
+  //   },
+  //   {
+  //     key: 'Multiple-Dataset',
+  //     text: 'Multiple-Dataset'
+  //   }
+  // ];
   public render(): void {
     const element: React.ReactElement<ILineChartsProps > = React.createElement(
       LineCharts,
@@ -67,8 +56,10 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
         SiteURL: this.properties.SiteURL,
         FieldX: this.properties.FieldX,
         FieldY:this.properties.FieldY,
+        FieldOp:this.properties.FieldOp,
         FieldXArr:this.properties.FieldXArr,
         FieldYArr:this.properties.FieldYArr,
+        FieldOpArr:this.properties.FieldOpArr,
         OperationType:this.properties.OperationType,
         ChartDataTypes:this.properties.ChartDataTypes,
         FillChart:this.properties.FillChart
@@ -86,6 +77,7 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
   }
 
   private get getAllLists () :   Promise < IPropertyPaneDropdownOption []> {
+    debugger;
     let  Lists : IPropertyPaneDropdownOption [] =  [];
     return sp.web.lists.get().then(resp=>{
       if  (resp) {
@@ -103,7 +95,8 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
     if  (propertyPath == `listName` ) {
       this.getAllFields (newValue).then( fields   =>  {
         this.ddlListColumns =  fields;
-        this.context.propertyPane.refresh ();
+        this.context.propertyPane.refresh();
+
      });
     }
   }
@@ -160,24 +153,6 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
                   options: this.ddlListColumns,
                   disabled: this.ddlLists.length == 0 
                 }),
-                // PropertyPaneDropdown ( 'FieldXType',{
-                //   label: `Select Field Type`,
-                //   options: [
-                //     {
-                //       key: 'Singlelineoftext',
-                //       text: "Single line of text"
-                //     },
-                //     {
-                //       key: 'Number',
-                //       text: 'Number'
-                //     },
-                //     {
-                //       key: 'Lookup',
-                //       text: 'Lookup'
-                //     },
-                //   ],
-                //   disabled: this.ddlLists.length == 0 
-                // }),
                 PropertyPaneDropdown ( 'OperationType',{
                   label: `Select Operation Type`,
                   options: this.ddlOperationTypes
@@ -188,29 +163,17 @@ export default class LineChartsWebPart extends BaseClientSideWebPart<ILineCharts
                   options: this.ddlListColumns,
                   disabled: this.ddlLists.length == 0 
                 }),
-                // PropertyPaneDropdown ( 'FieldYType',{
-                //   label: `Select Field Type`,
-                //   options: [
-                //     {
-                //       key: 'Singlelineoftext',
-                //       text: 'Single line of text'
-                //     },
-                //     {
-                //       key: 'Number',
-                //       text: 'Number'
-                //     },
-                //     {
-                //       key: 'Lookup',
-                //       text: 'Lookup'
-                //     }
-                //   ],
-                //   disabled: this.ddlLists.length == 0 
-                // }),
-                PropertyPaneDropdown ( 'ChartDataTypes',{
-                  label: `Select Chart Data Type`,
-                  options: this.ddlChartDataTypes,
+                PropertyPaneDropdown ( 'FieldOp',{
+                  label: `Select Operation Data Field`,
+                  options: this.ddlListColumns,
                   disabled: this.ddlLists.length == 0 
                 }),
+
+                // PropertyPaneDropdown ( 'ChartDataTypes',{
+                //   label: `Select Chart Data Type`,
+                //   options: this.ddlChartDataTypes,
+                //   disabled: this.ddlLists.length == 0 
+                // }),
 
                 PropertyPaneButton('',{
                   text: "Submit Form",
