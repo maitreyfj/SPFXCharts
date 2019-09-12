@@ -13,7 +13,7 @@ import {
 
 import * as strings from 'LineChartsWebPartStrings';
 import LineCharts from './components/LineCharts';
-import { ILineChartsProps } from './components/ILineChartsProps';
+import { ILineChartsProps } from './ILineChartsProps';
 import { sp, List, Fields } from "@pnp/sp";
 
 export default class LineChartsWebPart extends BaseClientSideWebPart<ILineChartsProps> {
