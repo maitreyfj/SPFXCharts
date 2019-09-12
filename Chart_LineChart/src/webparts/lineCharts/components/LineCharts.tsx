@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './LineCharts.module.scss';
-import { ILineChartsProps } from './ILineChartsProps';
+import { ILineChartsProps } from '../ILineChartsProps';
 import { ILineChartsState } from './ILineChartsState';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { ChartControl, ChartType } from '@pnp/spfx-controls-react/lib/ChartControl';
