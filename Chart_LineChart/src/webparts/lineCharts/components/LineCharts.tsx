@@ -63,19 +63,18 @@ export default class LineCharts extends React.Component<ILineChartsProps,ILineCh
         });
       });
       this.setState({
-        // FieldXArr:TitleArr,
-        // FieldYArr:ValueArr,
-        // FieldOpArr:OpArr
-        FieldXArr:[
-          'January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February','February', 'March'
-        ],
-        FieldYArr:[
-          //65, 59, 80, 81, 56, 55, 40
-          56, 45, 8, 18, 30, 55, 4, 35, 78, 32, 52
-        ],
-        FieldOpArr:[
-          65, 59, 80, 81, 56, 55, 40, 35, 78, 32, 52
-        ]
+        FieldXArr:TitleArr,
+        FieldYArr:ValueArr,
+        FieldOpArr:OpArr
+        // FieldXArr:[
+        //   'January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February','February', 'March'
+        // ],
+        // FieldYArr:[
+        //   56, 45, 8, 18, 30, 55, 4, 35, 78, 32, 52
+        // ],
+        // FieldOpArr:[
+        //   65, 59, 80, 81, 56, 55, 40, 35, 78, 32, 52
+        // ]
       });
       this.performOperation(this.state.OperationType,this.state.FieldXArr,this.state.FieldYArr,this.state.FieldOpArr,ChartDataTypes);
     });
@@ -257,7 +256,7 @@ export default class LineCharts extends React.Component<ILineChartsProps,ILineCh
           fill: this.state.FillChart,
           backgroundColor: "rgba(255, 99, 132, 0.2)",
           borderColor: "rgb(255, 99, 132)",
-          lineTension: 0,
+          lineTension: undefined,
           data:
             yaxisdata
         }//,
